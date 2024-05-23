@@ -1,0 +1,26 @@
+.navBar {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  display: flex;
+  flex: 1;
+}
+
+.logo:hover {
+  color: black;
+}
+
+.links {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 468px) {
+  .navBar {
+    flex-direction: column;
+  }
+}
