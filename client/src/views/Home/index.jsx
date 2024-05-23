@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import Post from "../../components/Post";
 const Home = () => {
   const [message, setMessage] = useState("");
 
@@ -18,6 +19,7 @@ const Home = () => {
       <Navbar />
       <h2>Hola bienvenido</h2>
       <p>Petro</p>;
+      <Post />
     </div>
   );
 };
