@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import pg from "pg";
 import bodyParser from "body-parser";
 import postgres from "postgres";
@@ -25,16 +25,24 @@ const db = postgres({
     },
 });
 
+async function getPgVersion() {
+    const result = await db`select version()`;
+    console.log(result);
+}
+
+
 //funcian para solicitar datas
 async function getPosts(req, res) {
     try {
-        const response = await db`SELECT * FROM posts`
-        res.json(response)
+        const response = await db`SELECT * FROM posts`;
+        const data = await response
+        console.log(data)
     } catch (error) {
-        console.error('Error al obtener usuarios:', error);
-        res.status(500).json({ error: 'Error al obtener usuarios' });
+        console.error('Error al obtener posts:', error);
     }
 }
+
+getPosts()
 
 App.get("/api/posts", getPosts)
 
