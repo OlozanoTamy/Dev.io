@@ -1,33 +1,36 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Post from "../../components/Post";
 import useStore from "../../state/store";
+
 const Home = () => {
-  const { fetchData, data } = useStore();
-  const [message, setMessage] = useState("");
-  // useEffect(() => {
-  //   fetchData();
-  //   setMessage(data);
-  // }, []);
+  const { data, isLoading, error, fetchData } = useStore();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const getPost = async () => {
-      try {
-        const response = await fetch("/api");
-        const data = await response.json();
-        setMessage(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-      getPost();
-    };
-  }, []);
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (data) {
+      setPosts(data);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <>Cargando...</>;
+  }
+  if (error) {
+    return <>Error: {error.message}</>;
+  }
+
+  console.log(data);
+
   return (
     <div>
-      <Navbar />
-      <h2>Hola bienvenido</h2>
-      <p>Petro</p>
+      {posts.map((post) => {
+        <Post key={`Post-key-${post.title}`} />;
+      })}
     </div>
   );
 };

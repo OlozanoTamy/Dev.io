@@ -1,21 +1,30 @@
-import { create } from 'zustand'
-//Se esta usadon zustand como manejador global de eventos
+import { create } from "zustand";
 const useStore = create((set) => ({
-    //retorna un Objeto que viene seteado con los datos
     data: [],
     isLoading: false,
     error: null,
     fetchData: async () => {
         try {
-            set({ isLoading: true })
+            set({ isLoading: true });
             const response = await fetch("/api/posts");
             const data = await response.json();
-            set({ data: data, isLoading: false })
+            set({ data, isLoading: false });
         } catch (error) {
-            set({ error, isLoading: false })
+            set({ error, isLoading: false });
         }
     },
-}))
-
+}));
 
 export default useStore;
+
+
+
+// const getPosts = async () => {
+//     try {
+//         const response = await fetch("/api/posts");
+//         const data = await response.json();
+//         setPosts(data);
+//     } catch (error) {
+//         console.error("Error fetching posts:", error);
+//     }
+// };
