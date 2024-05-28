@@ -1,8 +1,8 @@
 import express from "express"
 import bodyParser from "body-parser";
-import postgres from "postgres";
-//para importar las variables del Entorno
-import 'dotenv/config'
+import { register } from "./controllers/authController.js";
+//Importar de utilits para usar la base de datos
+import sql from "./utils/sql.js";
 const App = express();
 const Port = 3000;
 
@@ -13,24 +13,9 @@ App.use(bodyParser.json());
 // Servir archivos estáticos desde la carpeta 'assets'
 App.use(express.static('assets'));
 
-// Conectar a PostgreSQL usando el paquete 'postgres'
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
-console.log(PGDATABASE)
-
-const sql = postgres({
-    host: PGHOST,
-    database: PGDATABASE,
-    username: PGUSER,
-    password: PGPASSWORD,
-    port: 5432,
-    ssl: 'require',
-    connection: {
-        options: `project=${ENDPOINT_ID}`,
-    },
-});
 
 
-
+//Conecion inicial
 App.get('/api', (req, res) => {
     res.json({ message: "Hello from Express!" });
 })
@@ -41,7 +26,7 @@ async function getPgVersion() {
     const result = await sql`select version()`;
     console.log(result);
 }
-
+// getPgVersion();
 
 
 // Función para obtener posts desde la base de datos
@@ -59,6 +44,11 @@ async function getPosts(req, res) {
 
 // Ruta para obtener posts, se envia la funcion
 App.get("/api/posts", getPosts);
+
+//Este codigo sirve para recibir los datos que ha sido enviados desde el formulario para registrar un usuario nuevo
+//Envia la informacion de un req.body a register que hassea el password y se lo da a createUser para que lo almacene en la base de datos
+App.post('/api/data', register);
+
 
 // Iniciar el servidor
 App.listen(Port, () => {
