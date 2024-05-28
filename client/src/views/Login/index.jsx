@@ -1,18 +1,17 @@
 import { useForm } from "react-hook-form";
-import style from "./Form.module.css";
-import axios from "axios";
+import style from "./Login.module.css";
 
-export default function Form() {
+const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  //esta funcion hace que se envien los datos al servidor lo cual permite que sean registrados en la base de datos
+  //es funcion premite enviar los datos y que sean recibidos por el servidor para que verifique si el email existe en la base de datos
   const sendDataToServer = async (data) => {
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,22 +25,16 @@ export default function Form() {
     }
   };
 
-  const onSubmit = (data) => sendDataToServer(data);
-  return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <section>
-      <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-        <legend>Formulario Registro</legend>
-        {/* register your input into the hook by invoking the "register" function */}
-        <label>
-          UserName:
-          <input
-            className={style.username}
-            type="text"
-            {...register("username", { required: true })}
-          />
-        </label>
+  const onSubmit = (data) => {
+    console.log(data);
+    sendDataToServer(data);
+  };
 
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
+        <legend>Por favor ingresa tus datos</legend>
+        {/* register your input into the hook by invoking the "register" function */}
         <label>
           Email:
           <input
@@ -63,8 +56,10 @@ export default function Form() {
         {/* errors will return when field validation fails  */}
         {errors.exampleRequired && <span>This field is required</span>}
 
-        <input className={style.btnInput} type="submit" value="Register" />
+        <input className={style.btnInput} type="submit" value="Login" />
       </form>
-    </section>
+    </div>
   );
-}
+};
+
+export default Login;

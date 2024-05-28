@@ -1,6 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser";
-import { register } from "./controllers/authController.js";
+import authRoutes from './routes/authRoutes.js';
 //Importar de utilits para usar la base de datos
 import sql from "./utils/sql.js";
 const App = express();
@@ -47,7 +47,10 @@ App.get("/api/posts", getPosts);
 
 //Este codigo sirve para recibir los datos que ha sido enviados desde el formulario para registrar un usuario nuevo
 //Envia la informacion de un req.body a register que hassea el password y se lo da a createUser para que lo almacene en la base de datos
-App.post('/api/data', register);
+// App.post('/api/data', register);
+
+//use las solicitudes que se hacen en /api/auth y las redirige a authRutes
+App.use('/api/auth', authRoutes);
 
 
 // Iniciar el servidor
