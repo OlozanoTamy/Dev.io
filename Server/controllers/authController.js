@@ -12,6 +12,7 @@ import 'dotenv/config'
 //recibe la data desde api/data para hassear la contraseña y la guarda en la base de datos metiate la funcion createUser
 export const register = async (req, res) => {
     const { username, email, password } = req.body;
+    console.log(username, email, password)
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
         const user = await createUser(username, email, hashedPassword);

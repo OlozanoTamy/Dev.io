@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import style from "./Login.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,10 +20,16 @@ const Login = () => {
         },
         body: JSON.stringify(data),
       });
-      const result = await response.text();
-      console.log("Response from server:", result);
+      //si la respuespues es correcta recibe un toker que va a ser guardado en localstorage y va a redirigir hacia el perfil si no va a mostrar una alerta
+      if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+        navigate("/profile"); // Usa navigate para redirigir al usuario
+      } else {
+        alert("Invalid credentials");
+      }
     } catch (error) {
-      console.error("Error sending data:", error);
+      console.error("Error during login:", error);
     }
   };
 

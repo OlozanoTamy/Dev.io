@@ -8,6 +8,11 @@ const Navbar = () => {
     navigate("/register");
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
   return (
     <>
       <div className={style.navBar}>
@@ -17,7 +22,7 @@ const Navbar = () => {
         <div className={style.links}>
           <Link to={"/"}>Home</Link>
           <Link to={"#"}>My Profile</Link>
-          <Link to={"#"}>Liked Post</Link>
+          <button onClick={handleLogin}>Login</button>
           <button onClick={handleRegister}>Register</button>
         </div>
       </div>
@@ -26,3 +31,19 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
