@@ -21,9 +21,11 @@ const Login = () => {
         body: JSON.stringify(data),
       });
       //si la respuespues es correcta recibe un toker que va a ser guardado en localstorage y va a redirigir hacia el perfil si no va a mostrar una alerta
+      console.log(response.json, "Esta es la respuesta");
       if (response.ok) {
-        const { token } = await response.json();
+        const { token, username } = await response.json();
         localStorage.setItem("token", token);
+        localStorage.setItem("username", username);
         navigate("/profile"); // Usa navigate para redirigir al usuario
       } else {
         alert("Invalid credentials");

@@ -15,7 +15,6 @@ export const findUserByEmail = async (email) => {
     try {
         console.log(email)
         const result = await sql`SELECT * FROM users WHERE email = ${email}`;
-        console.log(result[0])
         return result[0]
     } catch (error) {
         console.log(error)
