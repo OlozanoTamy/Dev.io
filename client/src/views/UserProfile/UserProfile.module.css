@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  width: 80%;
+}
+
+.aside {
+  flex: 1;
+}
+
+.content {
+  flex: 2;
+}

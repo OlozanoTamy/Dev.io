@@ -24,6 +24,7 @@ const Login = () => {
       console.log(response.json, "Esta es la respuesta");
       if (response.ok) {
         const { token, username } = await response.json();
+        //pide y guarda en una constante el token y el nombre de usuario
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
         navigate("/profile"); // Usa navigate para redirigir al usuario
